@@ -1,0 +1,106 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Cart;
+use App\Models\Receipt;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
+use RealRashid\SweetAlert\Facades\Alert;
+
+
+class ReceiptController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'items.*.menu_id' => ['required', 'string', 'max:255'],
+            'items.*.total_pesanan' => ['required', 'integer', 'min:1'],
+        ]);
+
+        $receipts = [];
+        $user_id = Auth::id();
+
+        foreach ($validatedData['items'] as $item) {
+            $receipts[] = [
+                'user_id' => $user_id,
+                'menu_id' => $item['menu_id'],
+                'total_pesanan' => $item['total_pesanan'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+
+            Cart::create([
+                'user_id' => $user_id,
+                'menu_id' => $item['menu_id'],
+                'total_pesanan' => $item['total_pesanan'],
+            ]);
+        }
+
+        Alert::success('Berhasil Membeli', "Lanjutkan Pembelian Lebih Banyak Lagi");
+
+        Receipt::insert($receipts);
+
+        Cart::where('user_id', $user_id)->delete();
+
+        return redirect(route('page.home'))->with('buy-success', "Berhasil Melakukan Pembelian");
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Receipt $receipt)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Receipt $receipt)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Receipt $receipt)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Request $request)
+    {
+
+        $receipt = Receipt::findOrFail($request->receipt_id);
+        $receipt->delete();
+
+        return redirect(route('dashboard'))->with('succes_delete_receipt', "Berhasil Menghapus Data");
+    }
+}
