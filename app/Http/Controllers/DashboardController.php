@@ -24,9 +24,4 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function note() {
-        return view ("pages.dashboard.note.note", [
-            "title" => "Nota Penjualan"
-        ]);
-    }
 }

@@ -37,7 +37,7 @@
                                         <th>{{ $key + 1 }}</th>
                                         <td>{{ $value->name }}</td>
                                         <td>Rp {{ number_format($value['price'], 0, ',', '.') }}</td>
-                                        <td>{{ 'Unlimited' }}</td>
+                                        <td>{{ $value->stock }}</td>
                                         <td class="flex gap-3 justify-center">
                                             <a href="{{route("menu.edit", $value->slug)}}" class="btn btn-sm btn-info text-white"><i
                                                     class="fa-solid fa-pen-to-square"></i></a>

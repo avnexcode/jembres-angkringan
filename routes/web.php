@@ -5,9 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\NotaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PrintNoteController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
@@ -36,7 +38,8 @@ Route::middleware(['auth', 'verified', CheckRole::class])->group(function () {
     Route::put('/dashboard/menu/edit', [MenuController::class, 'update'])->name('menu.update');
     Route::delete('/dashboard/menu', [MenuController::class, 'destroy'])->name('menu.destroy');
     Route::get('/dashboard/menu/create/checkSlug', [MenuController::class, 'checkSlug']);
-    Route::get('/dashboard/note', [DashboardController::class, "note"])->name('note');
+    Route::get('/dashboard/note', [NotaController::class, "index"])->name('note');
+    Route::get('/dashboard/note/print/{id}', [PrintNoteController::class, "index"])->name('note.print');
 
 });
 

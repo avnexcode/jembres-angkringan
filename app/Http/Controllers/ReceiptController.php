@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Menu;
+use App\Models\Nota;
 use App\Models\Receipt;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -44,6 +46,20 @@ class ReceiptController extends Controller
         $user_id = Auth::id();
 
         foreach ($validatedData['items'] as $item) {
+            $menu = Menu::findOrFail($item['menu_id']);
+
+            $cart = Cart::where('user_id', $user_id)
+                ->where('menu_id', $item['menu_id'])
+                ->first();
+
+            if ($request->route()->getName() == 'receipt.store') {
+                $menu->stock -= $item['total_pesanan'];
+                $menu->save();
+            } elseif ($cart) {
+                $menu->stock -= $item['total_pesanan'];
+                $menu->save();
+            }
+
             $receipts[] = [
                 'user_id' => $user_id,
                 'menu_id' => $item['menu_id'],
@@ -51,17 +67,23 @@ class ReceiptController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
-
-            Cart::create([
-                'user_id' => $user_id,
-                'menu_id' => $item['menu_id'],
-                'total_pesanan' => $item['total_pesanan'],
-            ]);
+            Cart::updateOrCreate(
+                [
+                    'user_id' => $user_id,
+                    'menu_id' => $item['menu_id'],
+                ],
+                [
+                    'total_pesanan' => $item['total_pesanan'],
+                ]
+            );
         }
 
         Alert::success('Berhasil Membeli', "Lanjutkan Pembelian Lebih Banyak Lagi");
 
         Receipt::insert($receipts);
+        Nota::insert([
+            "user_id" => $user_id
+        ]);
 
         Cart::where('user_id', $user_id)->delete();
 
@@ -102,5 +124,16 @@ class ReceiptController extends Controller
         $receipt->delete();
 
         return redirect(route('dashboard'))->with('succes_delete_receipt', "Berhasil Menghapus Data");
+    }
+
+    function generateRandomString($length = 10)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }

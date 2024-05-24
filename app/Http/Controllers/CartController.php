@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -38,6 +39,8 @@ class CartController extends Controller
         $user_id = Auth::id();
         $menu_id = $validatedData['menu_id'];
 
+        // $menu = Menu::findOrFail($menu_id);
+
         $existingCartItem = Cart::where('user_id', $user_id)
             ->where('menu_id', $menu_id)
             ->first();
@@ -50,6 +53,7 @@ class CartController extends Controller
             $validatedData['total_pesanan'] = 1;
             Cart::create($validatedData);
         }
+
         Alert::success('Berhasil Menambahkan Ke Keranjang!', 'Silahkan Pilih Menu Lagi!');
         return redirect(route('page.home'));
     }
@@ -60,7 +64,7 @@ class CartController extends Controller
     public function show()
     {
         $cart = Cart::where('user_id', Auth::id())->get();
-        return view('pages.cart',[
+        return view('pages.cart', [
             "title" => "Cart",
             "cart" => $cart
         ]);

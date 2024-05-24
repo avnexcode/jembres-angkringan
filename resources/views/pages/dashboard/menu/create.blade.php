@@ -25,17 +25,17 @@
                             </div>
 
                             <div>
-                                <x-input-label for="slug" :value="__('Slug')" />
-                                <x-text-input id="slug" name="slug" type="text" class="mt-1 block w-full"
-                                    required autofocus autocomplete="off" disabled />
-                                <x-input-error class="mt-2" :messages="$errors->get('slug')" />
-                            </div>
-
-                            <div>
-                                <x-input-label for="price" :value="__('Price')" />
+                                <x-input-label for="price" :value="__('Harga Satuan')" />
                                 <x-text-input id="price" name="price" type="text" class="mt-1 block w-full"
                                     required autocomplete="off" />
                                 <x-input-error class="mt-2" :messages="$errors->get('price')" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="stock" :value="__('Jumlah')" />
+                                <x-text-input id="stock" name="stock" type="text" class="mt-1 block w-full"
+                                    required autocomplete="off" />
+                                <x-input-error class="mt-2" :messages="$errors->get('stock')" />
                             </div>
 
                             <div>

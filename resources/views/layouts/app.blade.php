@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="light">
 
 <head>
     <meta charset="utf-8">
@@ -38,7 +38,126 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- jquery --}}
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.js"
+        integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
+    <style>
+        .container {
+            display: grid;
+            grid-template-columns: auto;
+            gap: 0px;
+            width: 100%;
+        }
 
+        hr {
+            height: 1px;
+            background-color: rgba(16, 86, 82, .75);
+            border: none;
+        }
+
+        .card {
+            width: 100%;
+        }
+
+        .title {
+            width: 100%;
+            height: 40px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding-left: 20px;
+            border-bottom: 1px solid rgba(16, 86, 82, .75);
+            ;
+            font-weight: 700;
+            font-size: 11px;
+            color: #000000;
+        }
+
+        .cart {
+            border-radius: 19px 19px 0px 0px;
+        }
+
+        .cart .steps {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .cart .steps .step {
+            display: grid;
+            gap: 10px;
+        }
+
+        .cart .steps .step span {
+            font-size: 13px;
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .cart .steps .step p {
+            font-size: 13px;
+            font-weight: 600;
+            color: #000000;
+        }
+
+        /* Checkout */
+        .payments .details {
+            display: grid;
+            grid-template-columns: 10fr 2fr;
+            padding: 0px;
+            gap: 5px;
+        }
+
+        .payments .details span:nth-child(odd) {
+            font-size: 12px;
+            font-weight: 600;
+            color: #000000;
+            margin: auto auto auto 0;
+        }
+
+        .payments .details span:nth-child(even) {
+            font-size: 13px;
+            font-weight: 600;
+            color: #000000;
+            margin: auto 0 auto auto;
+        }
+
+        .checkout .footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 10px 10px 20px;
+            background-color: white;
+        }
+
+        .price {
+            position: relative;
+            font-size: 22px;
+            color: #2B2B2F;
+            font-weight: 900;
+        }
+
+        .checkout .checkout-btn {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            width: 150px;
+            height: 36px;
+            background: white;
+            box-shadow: 0px 0.5px 0.5px black, 0px 1px 0.5px black;
+            border-radius: 7px;
+            border: 1px solid black;
+            color: #000000;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
+        }
+
+        
+    </style>
 </head>
 
 <body class="font-sans antialiased">

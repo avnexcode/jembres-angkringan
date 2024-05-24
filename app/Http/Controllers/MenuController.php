@@ -37,6 +37,7 @@ class MenuController extends Controller
         $validatedData = $request->validate([
             'name' => ['required'],
             'price' => ['required'],
+            'stock' => ['required'],
             'category_id' => ['required'],
             'image' => ['image', 'file', 'max:10000'],
         ]);
@@ -80,13 +81,19 @@ class MenuController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Menu $menu)
+    public function update(Request $request)
     {
+        $menu_id = $request->id;
+        $menu = Menu::findOrFail($menu_id);
+
         $validatedData = $request->validate([
             'name' => ['required'],
             'price' => ['required'],
+            'stock' => ['required'],
             'category_id' => ['required'],
             'image' => ['image', 'file', 'max:10000'],
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         if ($request->file('image')) {
@@ -100,7 +107,8 @@ class MenuController extends Controller
         }
 
         $validatedData['slug'] = $this->generateSlug($validatedData['name']);
-        
+        $validatedData['stock'] += $menu->stock;
+
         Alert::success('Berhasil Memperbarui Menu');
         $menu->update($validatedData);
 

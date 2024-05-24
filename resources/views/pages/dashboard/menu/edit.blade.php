@@ -13,22 +13,30 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div>
-                        <form method="post" action="{{ route('menu.update', $menu->slug) }}" enctype="multipart/form-data"
-                            class="mt-6 space-y-6">
+                        <form method="post" action="{{ route('menu.update', $menu->slug) }}"
+                            enctype="multipart/form-data" class="mt-6 space-y-6">
                             @method('PUT')
                             @csrf
+                            <input type="hidden" name="id" id="id" value="{{ $menu->id }}">
                             <div>
                                 <x-input-label for="name" :value="__('Nama Menu')" />
-                                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full"
-                                    required autofocus autocomplete="off" :value="old('name', $menu->name)" />
+                                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" required autofocus autocomplete="off" :value="old('name', $menu->name)" />
                                 <x-input-error class="mt-2" :messages="$errors->get('name')" />
                             </div>
 
                             <div>
-                                <x-input-label for="price" :value="__('Price')" />
-                                <x-text-input id="price" name="price" type="text" class="mt-1 block w-full"
-                                    required autocomplete="off" :value="old('price', $menu->price)" />
+                                <x-input-label for="price" :value="__('Harga Satuan')" />
+                                <x-text-input id="price" name="price" type="text" class="mt-1 block w-full" required autocomplete="off" :value="old('price', $menu->price)" />
                                 <x-input-error class="mt-2" :messages="$errors->get('price')" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="stock" :value="__('Stok Menu')" class="mb-3" />
+                                <x-input-label for="stock" :value="__('Jumlah Sekarang')" />
+                                <x-text-input value="{{ $menu->stock }}" type="text" class="max-w-max mt-1 mb-1 block w-full disabled" readonly disabled/>
+                                <x-input-label for="stock" :value="__('Jumlah Ditambahkan')" />
+                                <x-text-input id="stock" name="stock" type="text" class="mt-1 block w-full" required autocomplete="off" />
+                                <x-input-error class="mt-2" :messages="$errors->get('stock')" />
                             </div>
 
                             <div>

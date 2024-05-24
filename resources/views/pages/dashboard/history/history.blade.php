@@ -7,7 +7,7 @@
                 </h2>
             </div>
             <div class="">
-                <a href="/dashboard/note" class="btn btn-neutral text-white">Cetak Penjualan</a>
+                <a href="/dashboard/note" class="btn btn-neutral text-white">Cetak Nota</a>
             </div>
         </div>
     </x-slot>
@@ -26,6 +26,8 @@
                                     <th>Jumlah</th>
                                     <th>Harga Makanan</th>
                                     <th>Total</th>
+                                    <th>Tanggal Pembelian</th>
+                                    <th>Waktu Pembelian</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,6 +42,8 @@
                                             <td>Rp
                                                 {{ number_format($receipt->menu->price * $receipt->total_pesanan, 0, ',', '.') }}
                                             </td>
+                                            <td>{{ $receipt->created_at->format('d-m-Y') }}</td>
+                                            <td>{{ $receipt->created_at->format('H:i:s') }}</td>
                                         </tr>
                                     @endforeach
                                 @else

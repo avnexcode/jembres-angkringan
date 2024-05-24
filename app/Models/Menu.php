@@ -14,6 +14,7 @@ class Menu extends Model
         "name",
         "slug",
         "price",
+        "stock",
         "category_id",
         "image",
     ];
@@ -21,5 +22,9 @@ class Menu extends Model
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function cart() {
+        return $this->hasMany(Cart::class, "menu_id");
     }
 }

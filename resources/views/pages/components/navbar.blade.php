@@ -61,9 +61,9 @@
                         <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
                     @endif
                     <li>
-                        <form method="POST" action="{{ route('logout') }}" class="">
+                        <form method="POST" action="{{ route('logout') }}" class="w-full h-full block">
                             @csrf
-                            <button type="submit" class="">Logout</button>
+                            <button type="submit" class="w-full h-full block text-left">Logout</button>
                         </form>
                     </li>
                 @else

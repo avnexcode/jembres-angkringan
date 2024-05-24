@@ -60,4 +60,9 @@ class User extends Authenticatable
     public function receipt() {
         return $this->hasMany(Receipt::class, "user_id");
     }
+    
+    public function menu() {
+        return $this->belongsTo(Menu::class, 'menu_id');
+    }
+
 }

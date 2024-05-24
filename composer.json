@@ -10,6 +10,7 @@
         "laravel/breeze": "^2.0",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",
+        "milon/barcode": "^11.0",
         "realrashid/sweet-alert": "^7.1"
     },
     "require-dev": {
