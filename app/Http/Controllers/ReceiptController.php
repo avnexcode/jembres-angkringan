@@ -82,7 +82,9 @@ class ReceiptController extends Controller
 
         Receipt::insert($receipts);
         Nota::insert([
-            "user_id" => $user_id
+            "user_id" => $user_id,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         Cart::where('user_id', $user_id)->delete();

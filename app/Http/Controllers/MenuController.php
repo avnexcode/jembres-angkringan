@@ -39,7 +39,7 @@ class MenuController extends Controller
             'price' => ['required'],
             'stock' => ['required'],
             'category_id' => ['required'],
-            'image' => ['image', 'file', 'max:10000'],
+            'image' => ['image', 'file', 'max:10000']
         ]);
 
         if ($request->file('image')) {
